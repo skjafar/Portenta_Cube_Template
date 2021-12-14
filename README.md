@@ -9,11 +9,16 @@ An STM32CubeIDE project for the Arduino Portenta.
 This porject is not optimized in terms of power, the goal here is maximum speed.
 If you care for efficiency you will need to work some more on the code. check SystemClock_Config() in main.c in the M7 project.
 
-It has the following features:
+### Feratures
 * Running M7 Core at 480MHz, which is the maximum.
 * Running M4 Core at 240MHz, which is the maximum.
 * FreeRTOS v10.4.3 on the M7 core.
-* FreeRTOS-TCP Ethernet stack ruinning on the M7 core, tested at 90MBps.
+* FreeRTOS-TCP Ethernet stack ruinning on the M7 core, tested at 90Mbps using IPerf.
+* Memory sharing example between cores, check shared_memory.c in both projects.
+* Virtual Serial port implemented via the USB-C connector, can be run at almost any baudrate, 115200 is recommended.
+* Telnet based Command Line Interface on port 2008.
+* Tasks running the oboard RGB LED.
+
 ## Getting started
 1. Download the project to your STM32CubeIDE workspace directory.
 2. Go to [File] => Import:
@@ -37,8 +42,9 @@ It has the following features:
 ![2021-12-15-025300_1906x1031_scrot1](https://user-images.githubusercontent.com/7383226/146092267-195c7046-f69e-4175-8df7-6c1f00f82630.png)
 
 ## Building and running the code
-The project comes predefined with 5 different run configurations:
+The project comes predefined with 5 different run/debug configurations:
 1. Portenta_STM_template_CM7 Debug
+
     This will compile both the CM4 and CM7 projects, then flash them both to the controller.
     As the STM32H747 is a dual core controller it needs two different projects, one for each core, this build configuration takes care of building and flashing both.
     This will then enter Debug mode for the M7 core only.
@@ -48,5 +54,11 @@ The project comes predefined with 5 different run configurations:
     This can be run only after the run configuration above is run.
 3. Portenta_STM_template_CM7 Release
 
-    Same as configuration 1 but with optimization level at -O3. 
-5. Portenta_STM_template_CM4 Debug
+    Same as configuration 1 but with optimization level at -O3. No debugging available.
+4. Portenta_STM_template_CM4 Release
+
+    Same as configuration 2 but with optimization level at -O3. No debugging available.
+5. Portenta_STM_template_CM4_DEBUG_NO_BUILD_NO_FLASH
+
+    This was used to be able to debug and already running code, mostly not important.
+    
