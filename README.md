@@ -58,7 +58,7 @@ The project comes predefined with 5 different run/debug configurations:
 4. Portenta_STM_template_CM4 Release
 
     Same as configuration 2 but with optimization level at -O3. No debugging available.
-5. Portenta_STM_template_CM4_DEBUG_NO_BUILD_NO_FLASH
+5. Portenta_STM_template_CM7_DEBUG_NO_BUILD_NO_FLASH
 
-    This was used to be able to debug and already running code, mostly not important.
+    This was used to be able to debug an already running code, mostly not important.
     
