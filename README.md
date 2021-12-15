@@ -80,9 +80,9 @@ It is mostly self-explanatory. FreeRTOS Heap and Ethernet buffers are shown, as 
 
 The **Task Statistics** shows how much CPU time each FreeRTOS task is consuming. This can be used for profiling tasks.
 
-If an Ethernet cable is connected to the board through one of the expansion boards, such as the Camera Module or the Breakout Module, **Phy Link Up** will be displayed along with the IP address the device received by your local DHCP server.
+If an Ethernet cable is connected to the board through one of the expansion boards, such as the [Vision Sheild](https://www.arduino.cc/pro/hardware/product/portenta-vision-shield) or the [Breakout Board](https://www.arduino.cc/pro/hardware/product/portenta-breakout), **Phy Link Up** will be displayed along with the IP address the device received by your local DHCP server.
 
-This interface is handled by two FreeRTOS taks:
+This interface is handled by two FreeRTOS tasks:
 * USB Info
    This displays the information and statistics every second.
 * USB CLI
@@ -98,3 +98,4 @@ As soon as the device is connected to the local network it will start the task *
 * TCP Port: 2008
 
 You can type **help** to see available commands.
+
