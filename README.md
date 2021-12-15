@@ -9,7 +9,7 @@ An STM32CubeIDE project for the Arduino Portenta.
 This porject is not optimized in terms of power, the goal here is maximum speed.
 If you care for efficiency you will need to work some more on the code. check SystemClock_Config() in main.c in the M7 project.
 
-### Feratures
+### Features
 * Running M7 Core at 480MHz, which is the maximum.
 * Running M4 Core at 240MHz, which is the maximum.
 * FreeRTOS v10.4.3 on the M7 core.
@@ -46,6 +46,8 @@ The Portenta comes with a custom bootloader that we are going to replace by the 
 
 **VERY IMPORTANT NOTE: AFTER THIS YOUR BOARD WILL NO LONGER WORK WITH THE ARDUINO IDE.**
 
+If you want to return the board to its original state you will have to flash the [ArduinoCore-mbed bootloader](https://github.com/arduino/ArduinoCore-mbed/tree/master/bootloaders/PORTENTA_H7). I tested the [**portentah7_bootloader_mbed_hs_v2.bin**](https://github.com/arduino/ArduinoCore-mbed/blob/master/bootloaders/PORTENTA_H7/portentah7_bootloader_mbed_hs_v2.bin) and it worked fine.
+
 We need to put the controller in DFU mode in order to flash it, there are two ways of acheiving this:
 * Soldering a wire to the BOOT pin on the back of the board
 
@@ -74,8 +76,6 @@ You can connect the 10 pin connector to the Vision Shield as shown below, it als
 As for the Breakout Board, this only takes the 20 pin connector as shown below
 
 ![IMG_20211216_001006](https://user-images.githubusercontent.com/7383226/146273598-3ecbef03-bdd0-401e-a4c1-40a74d6f0ddc.jpg)
-
-
 
 ## Building and running the code
 The project comes predefined with 5 different run/debug configurations:
