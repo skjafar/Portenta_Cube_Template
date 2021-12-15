@@ -61,4 +61,40 @@ The project comes predefined with 5 different run/debug configurations:
 5. Portenta_STM_template_CM7_DEBUG_NO_BUILD_NO_FLASH
 
     This was used to be able to debug an already running code, mostly not important.
-    
+
+## Interfaces
+### Virual Com Port
+As soon as the board is connected to a PC it populates a virtual com port that can be accessed by any Serial Com Port interface, such as Putty or Minicom.
+
+**Configuration**
+* Baudrate: 115200 [This can be changed, it automatically adapts]
+* Parity:   1 bit
+* Bits:     8 bits
+* Flow:     None
+
+This is what the screen will show once connected
+
+![2021-12-14-185310_812x520_scrot](https://user-images.githubusercontent.com/7383226/146254288-5aa96e72-bf8c-4159-ba62-718cebc34230.png)
+
+It is mostly self-explanatory. FreeRTOS Heap and Ethernet buffers are shown, as well as the uptime in seconds.
+
+The **Task Statistics** shows how much CPU time each FreeRTOS task is consuming. This can be used for profiling tasks.
+
+If an Ethernet cable is connected to the board through one of the expansion boards, such as the Camera Module or the Breakout Module, **Phy Link Up** will be displayed along with the IP address the device received by your local DHCP server.
+
+This interface is handled by two FreeRTOS taks:
+* USB Info
+   This displays the information and statistics every second.
+* USB CLI
+   Handles the Command Line Interface over the serial link. Type **help** to see available commands.
+
+### TCP based Command Line Interface
+As soon as the device is connected to the local network it will start the task **TCP CLI** which takes care of this interface. You can connect to this using Putty or any other TCP telnet interface such as netcat.
+
+![2021-12-14-185442_943x1023_scrot](https://user-images.githubusercontent.com/7383226/146257847-9616442d-49a8-4c97-a57d-c44291e2bb93.png)
+
+**Configuration**
+* IP Address: As shown in the Virtual Com Port Interface.
+* TCP Port: 2008
+
+You can type **help** to see available commands.
