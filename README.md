@@ -41,6 +41,42 @@ If you care for efficiency you will need to work some more on the code. check Sy
 
 ![2021-12-15-025300_1906x1031_scrot1](https://user-images.githubusercontent.com/7383226/146092267-195c7046-f69e-4175-8df7-6c1f00f82630.png)
 
+## Flashing
+The Portenta comes with a custom bootloader that we are going to replace by the procedure that follows.
+
+**VERY IMPORTANT NOTE: AFTER THIS YOUR BOARD WILL NO LONGER WORK WITH THE ARDUINO IDE.**
+
+We need to put the controller in DFU mode in order to flash it, there are two ways of acheiving this:
+* Soldering a wire to the BOOT pin on the back of the board
+
+   I don't really recommend this, the pad is absolutely tiny and you might damage the board in the process. But this is the method I had to use initially.
+   After a wire was soldered I used a 3V lithium coin battery to set this pin high (in reference to ground of course) and then plugged in the USB cable, this put the controller in DFU mode and enabled me to program it normally.
+   
+   The yellow wire is soldered to the BOOT pad in the picture below.
+   
+  ![IMG_20211216_002013](https://user-images.githubusercontent.com/7383226/146274212-ca32e639-b9c9-4231-bfba-ef05b15946c6.jpg)
+ 
+* Settig the BOOT Dip Switch on the Breakout Board
+
+   There is a dual dip switch on the Breakout Board, one of those switches is labeled **BOOT**, when you set this one to ON then reset the board, your board will be in DFU mode and can be programed using your ST-LINK device.
+   
+   ![InkedIMG_20211216_002428_LI](https://user-images.githubusercontent.com/7383226/146274455-69720184-693a-4910-a472-e5c8985a98b5.jpg)
+
+### JTAG / SWD
+You will need a Debugging/Programming probe to program your controller, I have tested both the ST-LINK V3-MINI and the ST-LINK V3, and they both worked fine.
+
+Unfortunately the Portenta board itself does not expose the SWD pins, you will need either the Breakout Board or the Vision Shield.
+
+You can connect the 10 pin connector to the Vision Shield as shown below, it also takes the 20 pin connector.
+
+![IMG_20211216_000918](https://user-images.githubusercontent.com/7383226/146273555-d65ff611-9928-40ba-8130-32899d3fb5fb.jpg)
+
+As for the Breakout Board, this only takes the 20 pin connector as shown below
+
+![IMG_20211216_001006](https://user-images.githubusercontent.com/7383226/146273598-3ecbef03-bdd0-401e-a4c1-40a74d6f0ddc.jpg)
+
+
+
 ## Building and running the code
 The project comes predefined with 5 different run/debug configurations:
 1. Portenta_STM_template_CM7 Debug
