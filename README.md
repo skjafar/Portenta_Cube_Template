@@ -2,7 +2,7 @@
 
 ## Intro
 I was looking for a very powerful controller to use for some work related projects.
-The Portenta was released in 2020 with not a lot of documentation at the beggining, but the high density connectors on the back were a great way to integrate this board into any PCB. But I do not beleive the Arduino platform is ideal for professional/industrial applications, and with this I began reverse engineering the PCB and all the initialization code it requires.
+The Portenta was released in 2020 with not a lot of documentation at the beggining, but the high density connectors on the back were a great way to integrate this board into any PCB. But I wanted to program it using STM32CubeIDE, and with this I began reverse engineering the PCB and all the initialization code it requires.
 
 ### What is this
 An STM32CubeIDE project for the Arduino Portenta.
@@ -48,7 +48,7 @@ The Portenta comes with a custom bootloader that we are going to replace by the 
 
 If you want to return the board to its original state you will have to flash the [ArduinoCore-mbed bootloader](https://github.com/arduino/ArduinoCore-mbed/tree/master/bootloaders/PORTENTA_H7). I tested the [**portentah7_bootloader_mbed_hs_v2.bin**](https://github.com/arduino/ArduinoCore-mbed/blob/master/bootloaders/PORTENTA_H7/portentah7_bootloader_mbed_hs_v2.bin) and it worked fine.
 
-We need to put the controller in DFU mode in order to flash it, there are two ways of acheiving this:
+You should be able to directly flash the board without any problems, the SWD pins seem to be defined in the Arduino bootloader. Should you have any problems I recommend putting the controller in DFU mode, there are two ways of acheiving that:
 * Soldering a wire to the BOOT pin on the back of the board
 
    I don't really recommend this, the pad is absolutely tiny and you might damage the board in the process. But this is the method I had to use initially.
@@ -134,4 +134,126 @@ As soon as the device is connected to the local network it will start the task *
 * TCP Port: 2008
 
 You can type **help** to see available commands.
+
+## STM32Cube Device Configuration Tool
+When you double click the .ioc file the Device Configuration Tool tab will open, this enables you to easily configure your board and the libraries that will be added.
+
+One important thing to note, I have tried to make the code as stable as possible, minimizng the effect of a modificaiton by this tool, but I was not 100% successful.
+
+You will have to check what files have changed and if you expected those files to change, I use the Source Control tool provided by VSCode, it shows all the moidifications that have been applied on the files.
+
+![VSCode_GitDiff](https://user-images.githubusercontent.com/7383226/146281019-febd050b-58e0-41fe-87bd-9bd4a26b275a.PNG)
+
+You will have to do the following to have your program working properly after a modification by this tool:
+1. Remove lines 19-46 from CM7/Core/Src/eth.c
+   ```C
+   /* USER CODE END Header */
+   /* Includes ------------------------------------------------------------------*/
+   #include "eth.h"
+
+   #if defined ( __ICCARM__ ) /*!< IAR Compiler */
+
+   #pragma location=0x30040000
+   ETH_DMADescTypeDef  DMARxDscrTab[ETH_RX_DESC_CNT]; /* Ethernet Rx DMA Descriptors */
+   #pragma location=0x300400C0
+   ETH_DMADescTypeDef  DMATxDscrTab[ETH_TX_DESC_CNT]; /* Ethernet Tx DMA Descriptors */
+   #pragma location=0x300402F0
+   uint8_t Rx_Buff[ETH_RX_DESC_CNT][ETH_MAX_PACKET_SIZE]; /* Ethernet Receive Buffers */
+
+   #elif defined ( __CC_ARM )  /* MDK ARM Compiler */
+
+   __attribute__((at(0x30040000))) ETH_DMADescTypeDef  DMARxDscrTab[ETH_RX_DESC_CNT]; /* Ethernet Rx DMA Descriptors */
+   __attribute__((at(0x300400C0))) ETH_DMADescTypeDef  DMATxDscrTab[ETH_TX_DESC_CNT]; /* Ethernet Tx DMA Descriptors */
+   __attribute__((at(0x300402F0))) uint8_t Rx_Buff[ETH_RX_DESC_CNT][ETH_MAX_PACKET_SIZE]; /* Ethernet Receive Buffer */
+
+   #elif defined ( __GNUC__ ) /* GNU Compiler */
+
+   ETH_DMADescTypeDef DMARxDscrTab[ETH_RX_DESC_CNT] __attribute__((section(".RxDecripSection"))); /* Ethernet Rx DMA Descriptors */
+   ETH_DMADescTypeDef DMATxDscrTab[ETH_TX_DESC_CNT] __attribute__((section(".TxDecripSection")));   /* Ethernet Tx DMA Descriptors */
+   uint8_t Rx_Buff[ETH_RX_DESC_CNT][ETH_MAX_PACKET_SIZE] __attribute__((section(".RxArraySection"))); /* Ethernet Receive Buffers */
+
+   #endif
+
+   ETH_TxPacketConfig TxConfig;
+   ```
+1. Remove lines 53-98 from CM7/Core/Src/eth.c
+   ```C
+   ETH_HandleTypeDef heth;
+
+   /* ETH init function */
+   void MX_ETH_Init(void)
+   {
+
+     /* USER CODE BEGIN ETH_Init 0 */
+
+     /* USER CODE END ETH_Init 0 */
+
+      static uint8_t MACAddr[6];
+
+     /* USER CODE BEGIN ETH_Init 1 */
+
+     /* USER CODE END ETH_Init 1 */
+     heth.Instance = ETH;
+     MACAddr[0] = 0x00;
+     MACAddr[1] = 0x80;
+     MACAddr[2] = 0xE1;
+     MACAddr[3] = 0x00;
+     MACAddr[4] = 0x00;
+     MACAddr[5] = 0x00;
+     heth.Init.MACAddr = &MACAddr[0];
+     heth.Init.MediaInterface = HAL_ETH_RMII_MODE;
+     heth.Init.TxDesc = DMATxDscrTab;
+     heth.Init.RxDesc = DMARxDscrTab;
+     heth.Init.RxBuffLen = 1524;
+
+     /* USER CODE BEGIN MACADDRESS */
+
+     /* USER CODE END MACADDRESS */
+
+     if (HAL_ETH_Init(&heth) != HAL_OK)
+     {
+       Error_Handler();
+     }
+
+     memset(&TxConfig, 0 , sizeof(ETH_TxPacketConfig));
+     TxConfig.Attributes = ETH_TX_PACKETS_FEATURES_CSUM | ETH_TX_PACKETS_FEATURES_CRCPAD;
+     TxConfig.ChecksumCtrl = ETH_CHECKSUM_IPHDR_PAYLOAD_INSERT_PHDR_CALC;
+     TxConfig.CRCPadCtrl = ETH_CRC_PAD_INSERT;
+     /* USER CODE BEGIN ETH_Init 2 */
+
+     /* USER CODE END ETH_Init 2 */
+
+   }
+   ```
+3. Remove the first call for **MX_USB_DEVICE_Init()** in CM7/Core/Src/main.c
+   ```C
+   /* Initialize all configured peripherals */
+   MX_GPIO_Init();
+   MX_I2C1_Init();
+   MX_TIM2_Init();
+   MX_USB_DEVICE_Init();
+   /* USER CODE BEGIN 2 */
+   ```
+   It is called again after properly setting up the USB hardware.
+4. The Configuration Tool decides to remove the linked files for some reason.
+   This is the most frustrating problem in this procedure, I am not able to keep the files that I add to each project stay.
+   Of course this is usually not a problem, but since this is a nested project it shares the STM_HAL_Drivers, there is only one copy of those files and it located at the base folder not inside the nested folders. You need to link these files to each project to get it to work. The Configuration Tool decides to remove these links every time it is used.
+   
+   Here is how I do it, if you know a better way please let me know:
+   * Right click on **Drivers** folder in the base project, **Show In -> System Explorer**.
+
+      ![Readding_Links1](https://user-images.githubusercontent.com/7383226/146341539-50b77319-95b8-49ae-9fb7-1022a461321d.png)
+   
+      This will open the folder in windows explorer.
+   * Drag the folder named **STM32H7xx_HAL_Driver** to the **Drivers** folder inside the **portenta_STM_template_CM4** Project.
+   
+      ![Readding_Links2](https://user-images.githubusercontent.com/7383226/146342134-5b3f0aeb-a677-4246-a359-e202e79fef00.png)
+   
+      Then select **Link to files and recreate folder structure with virtual folders**, keep the links relative to the **PROJECT_LOC**.
+   
+      ![Readding_Links3](https://user-images.githubusercontent.com/7383226/146342448-41d8cfd0-95d5-4b92-a4b0-461a9bd74148.png)
+   
+   * Then delete the **Inc** folder and the **License** file. Make sure they have the small squares next to them, indicating that they are just links not the actual files. This step is optional for a cleaner project.
+   
+      ![Readding_Links4](https://user-images.githubusercontent.com/7383226/146343104-805b5ba6-1dd2-481f-9a4f-0032cad3f32d.png)
 
