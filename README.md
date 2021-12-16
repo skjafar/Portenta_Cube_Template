@@ -22,24 +22,25 @@ If you care for efficiency you will need to work some more on the code. check Sy
 ## Getting started
 1. Download the project to your STM32CubeIDE workspace directory.
 2. Go to [File] => Import:
-
-![2021-12-14-184337_1906x1031_scrot1](https://user-images.githubusercontent.com/7383226/146091494-44419878-2078-4ca2-b530-502ce14fed97.png)
-
+   
+   <img src="https://user-images.githubusercontent.com/7383226/146091494-44419878-2078-4ca2-b530-502ce14fed97.png" width="400">
+   
 3. Select [Exesting Projects into Workspace].
-
-![2021-12-14-184513_519x521_scrot](https://user-images.githubusercontent.com/7383226/146091617-ce6f3fe6-e28d-4745-8ecb-ba4f3a68515d.png)
-
+   
+   <img src="https://user-images.githubusercontent.com/7383226/146091617-ce6f3fe6-e28d-4745-8ecb-ba4f3a68515d.png" width="400">
+   
 4. Set the root directory to your Workspace folder and Select all 3 projects:
     * Portenta_Cube_Template.
     * Portenta_STM_Temaplate_CM4
     * Portenta_STM_Temaplate_CM7
-    Make sure to select **Search for nested projects
+      
+   Make sure to select **Search for nested projects**
      
-![2021-12-14-184615_979x735_scrot](https://user-images.githubusercontent.com/7383226/146092033-cf786f9c-1f3d-4266-b99a-332bce17257c.png)
-
+   <img src="https://user-images.githubusercontent.com/7383226/146092033-cf786f9c-1f3d-4266-b99a-332bce17257c.png" width="700">
+   
 5. Finish. Now you should have one master project with 2 nested projects.
-
-![2021-12-15-025300_1906x1031_scrot1](https://user-images.githubusercontent.com/7383226/146092267-195c7046-f69e-4175-8df7-6c1f00f82630.png)
+      
+   ![2021-12-15-025300_1906x1031_scrot1](https://user-images.githubusercontent.com/7383226/146092267-195c7046-f69e-4175-8df7-6c1f00f82630.png)
 
 ## Flashing
 The Portenta comes with a custom bootloader that we are going to replace by the procedure that follows.
@@ -56,13 +57,13 @@ You should be able to directly flash the board without any problems, the SWD pin
    
    The yellow wire is soldered to the BOOT pad in the picture below.
    
-  ![IMG_20211216_002013](https://user-images.githubusercontent.com/7383226/146274212-ca32e639-b9c9-4231-bfba-ef05b15946c6.jpg)
- 
+  <img src="https://user-images.githubusercontent.com/7383226/146274212-ca32e639-b9c9-4231-bfba-ef05b15946c6.jpg" width="600">
+   
 * Settig the BOOT Dip Switch on the Breakout Board
 
    There is a dual dip switch on the Breakout Board, one of those switches is labeled **BOOT**, when you set this one to ON then reset the board, your board will be in DFU mode and can be programed using your ST-LINK device.
    
-   ![InkedIMG_20211216_002428_LI](https://user-images.githubusercontent.com/7383226/146274455-69720184-693a-4910-a472-e5c8985a98b5.jpg)
+   <img src="https://user-images.githubusercontent.com/7383226/146274455-69720184-693a-4910-a472-e5c8985a98b5.jpg" width="600">
 
 ### JTAG / SWD
 You will need a Debugging/Programming probe to program your controller, I have tested both the ST-LINK V3-MINI and the ST-LINK V3, and they both worked fine.
@@ -71,11 +72,11 @@ Unfortunately the Portenta board itself does not expose the SWD pins, you will n
 
 You can connect the 10 pin connector to the Vision Shield as shown below, it also takes the 20 pin connector.
 
-![IMG_20211216_000918](https://user-images.githubusercontent.com/7383226/146273555-d65ff611-9928-40ba-8130-32899d3fb5fb.jpg)
+<img src="https://user-images.githubusercontent.com/7383226/146273555-d65ff611-9928-40ba-8130-32899d3fb5fb.jpg" width="600">
 
 As for the Breakout Board, this only takes the 20 pin connector as shown below
 
-![IMG_20211216_001006](https://user-images.githubusercontent.com/7383226/146273598-3ecbef03-bdd0-401e-a4c1-40a74d6f0ddc.jpg)
+<img src="https://user-images.githubusercontent.com/7383226/146273598-3ecbef03-bdd0-401e-a4c1-40a74d6f0ddc.jpg" width="600">
 
 ## Building and running the code
 The project comes predefined with 5 different run/debug configurations:
@@ -110,7 +111,7 @@ As soon as the board is connected to a PC it populates a virtual com port that c
 
 This is what the screen will show once connected
 
-![2021-12-14-185310_812x520_scrot](https://user-images.githubusercontent.com/7383226/146254288-5aa96e72-bf8c-4159-ba62-718cebc34230.png)
+<img src="https://user-images.githubusercontent.com/7383226/146254288-5aa96e72-bf8c-4159-ba62-718cebc34230.png" width="800">
 
 It is mostly self-explanatory. FreeRTOS Heap and Ethernet buffers are shown, as well as the uptime in seconds.
 
@@ -127,7 +128,7 @@ This interface is handled by two FreeRTOS tasks:
 ### TCP based Command Line Interface
 As soon as the device is connected to the local network it will start the task **TCP CLI** which takes care of this interface. You can connect to this using Putty or any other TCP telnet interface such as netcat.
 
-![2021-12-14-185442_943x1023_scrot](https://user-images.githubusercontent.com/7383226/146257847-9616442d-49a8-4c97-a57d-c44291e2bb93.png)
+<img src="https://user-images.githubusercontent.com/7383226/146257847-9616442d-49a8-4c97-a57d-c44291e2bb93.png" width="800">
 
 **Configuration**
 * IP Address: As shown in the Virtual Com Port Interface.
@@ -140,7 +141,7 @@ When you double click the .ioc file the Device Configuration Tool tab will open,
 
 One important thing to note, I have tried to make the code as stable as possible, minimizng the effect of a modificaiton by this tool, but I was not 100% successful.
 
-You will have to check what files have changed and if you expected those files to change, I use the Source Control tool provided by VSCode, it shows all the moidifications that have been applied on the files.
+You will have to check what files have changed and check if you expected those files to change or not, I use the Source Control tool provided by VSCode, it shows all the moidifications that have been applied on the files.
 
 ![VSCode_GitDiff](https://user-images.githubusercontent.com/7383226/146281019-febd050b-58e0-41fe-87bd-9bd4a26b275a.PNG)
 
