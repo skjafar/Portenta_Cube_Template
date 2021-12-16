@@ -257,3 +257,12 @@ You will have to do the following to have your program working properly after a 
    
       ![Readding_Links4](https://user-images.githubusercontent.com/7383226/146343104-805b5ba6-1dd2-481f-9a4f-0032cad3f32d.png)
 
+## Configuration Files
+The project has some configuration files for setup.
+
+* Common/header/application_config.h
+   Contains some helping macros as well as the configuration parameters for the FreeRTOS tasks, such as their stack sizes and priorities.
+* CM7/Core/Inc/FreeRTOSConfig.h
+   Contains the FreeRTOS configuiation. Consult [FreeRTOS Documentation](https://www.freertos.org/a00110.html) for more information.
+* CM7/Application/header/FreeRTOSIPConfig.h
+   Contains all the configuration for the FreeRTOS TCP stack. Consult [FreeRTOS-TCP Documentation](https://www.freertos.org/FreeRTOS-Plus/FreeRTOS_Plus_TCP/TCP_IP_Configuration.html) for more information.
