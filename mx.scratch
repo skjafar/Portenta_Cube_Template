@@ -6,7 +6,7 @@
     <WorkspacePath>E:\Projects\STM32CubeIDE\workspace_1.6.1\portenta_STM_template\</WorkspacePath>
     <underRoot>true</underRoot>
     <TrustZone>0</TrustZone>
-    <HAL_Driver>C:\Users\Sofian\STM32Cube\Repository\STM32Cube_FW_H7_V1.9.0</HAL_Driver>
+    <HAL_Driver>C:\Users\Sofian\STM32Cube\Repository\STM32Cube_FW_H7_V1.10.0</HAL_Driver>
     <CMSIS>Drivers/CMSIS</CMSIS>
     <Toolchain>STM32CubeIDE</Toolchain>
     <IocFile>portenta_STM_template.ioc</IocFile>
@@ -101,7 +101,7 @@
             <memory access="xrw" name="RAM_D3" size="64" start="0x18000000"/>
             <memory access="rx" name="FLASH" size="1024" start="0x8100000"/>
           </memories>
-          <startup>C:\Users\Sofian\STM32Cube\Repository\STM32Cube_FW_H7_V1.9.0\Drivers\CMSIS\Device\ST\STM32H7xx\Source\Templates\gcc\startup_stm32h747xx.s</startup>
+          <startup>C:\Users\Sofian\STM32Cube\Repository\STM32Cube_FW_H7_V1.10.0\Drivers\CMSIS\Device\ST\STM32H7xx\Source\Templates\gcc\startup_stm32h747xx.s</startup>
           <LinkSettings>
             <LinkAdditionalLibs/>
           </LinkSettings>
@@ -324,7 +324,7 @@
             <memory access="xrw" name="RAM_D3" size="64" start="0x18000000"/>
             <memory access="rx" name="FLASH" size="1024" start="0x8100000"/>
           </memories>
-          <startup>C:\Users\Sofian\STM32Cube\Repository\STM32Cube_FW_H7_V1.9.0\Drivers\CMSIS\Device\ST\STM32H7xx\Source\Templates\gcc\startup_stm32h747xx.s</startup>
+          <startup>C:\Users\Sofian\STM32Cube\Repository\STM32Cube_FW_H7_V1.10.0\Drivers\CMSIS\Device\ST\STM32H7xx\Source\Templates\gcc\startup_stm32h747xx.s</startup>
           <LinkSettings>
             <LinkAdditionalLibs/>
           </LinkSettings>
