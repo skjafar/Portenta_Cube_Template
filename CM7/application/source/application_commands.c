@@ -34,6 +34,11 @@
 
 #include "stdbool.h"
 
+// variables required for deciding which interface has the control of the system
+volatile uint32_t controllingTaskNumber;
+volatile uint32_t USBTaskNumber;
+volatile uint32_t TCP_CLITaskNumber;
+
 /*************************************
     CLI commands callback functions
  ************************************/

@@ -30,6 +30,8 @@ union Parameter
     float       fvalue;
 };
 
+parameters_t    PARS;
+
 /*************************************
     Static functions prototypes
  ************************************/

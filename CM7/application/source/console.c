@@ -35,6 +35,10 @@
 /* DEL acts as a backspace. */
 #define cmdASCII_DEL		( 0x7F )
 
+// Task handles
+TaskHandle_t xCreatedAppUSBCLITask;
+TaskHandle_t xCreatedAppUSBInfoTask;
+
 static SemaphoreHandle_t                UART_mutex;
 
 /*

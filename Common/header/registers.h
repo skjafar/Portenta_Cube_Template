@@ -12,7 +12,7 @@
 #include "apptypes.h"
 
 // struct for holding the registers
-registers_t REGS;
+extern registers_t REGS;
 
 /*************************************
          functions prototypes

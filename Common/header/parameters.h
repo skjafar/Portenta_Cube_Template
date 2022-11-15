@@ -11,7 +11,7 @@
 #include "apptypes.h"
 
 // two lists of parameters, one is used online, the other is for reading and storing paramters in flash
-parameters_t PARS;
+extern parameters_t PARS;
 
 /*************************************
     Static functions prototypes

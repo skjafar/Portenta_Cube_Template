@@ -20,8 +20,8 @@
 #include "NetworkInterface.h"
 #include "NetworkBufferManagement.h"
 
-TaskHandle_t xCreatedAppUSBCLITask;
-TaskHandle_t xCreatedAppUSBInfoTask;
+extern TaskHandle_t xCreatedAppUSBCLITask;
+extern TaskHandle_t xCreatedAppUSBInfoTask;
 
 void usb_uart_start(void);
 

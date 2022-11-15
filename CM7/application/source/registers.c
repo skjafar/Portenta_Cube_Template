@@ -30,6 +30,7 @@ union Register
     float       fvalue;
 };
 
+registers_t     REGS;
 /*
  * Register the commands for flash handling
  */
